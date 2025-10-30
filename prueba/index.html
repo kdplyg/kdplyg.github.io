@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KdpLyg</title>
+  <meta name="description" content="Editorial digital enfocada en libros de bajo contenido para el mercado estadounidense.">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>KdpLyg</h1>
+  </header>
+
+  <main>
+    <section class="section">
+      <h2>Sobre la empresa</h2>
+      <p>
+        <strong>KdpLyg</strong> es una empresa editorial digital enfocada en la publicación <strong>constante</strong> de libros de bajo contenido, 
+        como cuadernos de costura, libros para colorear, juegos y patrones técnicos.
+      </p>
+      <p>
+        Trabajamos exclusivamente para el <strong>mercado estadounidense</strong> a través de la plataforma <strong>Amazon KDP</strong>.
+      </p>
+      <p>
+        Publicamos bajo distintos seudónimos según el nicho, como <em>HL Coloring</em>, <em>Confecciones GR</em> y otros, 
+        manteniendo un flujo de producción escalable y de alta calidad.
+      </p>
+    </section>
+
+    <section class="section">
+      <h2>¿Eres diseñador gráfico?</h2>
+      <p>
+        Si eres un <strong>creador visual</strong> o <strong>diseñador gráfico</strong> que busca <strong>proyectos constantes</strong>, 
+        te invitamos a postularte.
+      </p>
+      <p>
+        <strong>¿Qué buscamos?</strong> Personas que dominen <strong>herramientas vectoriales</strong> 
+        (Illustrator, Inkscape o CorelDRAW) y que tengan <strong>buen criterio visual</strong>. 
+        No necesitas un título formal, solo el dominio de las herramientas y la capacidad de entregar con precisión.
+      </p>
+      <a href="https://forms.gle/bXfsLo81vEFu43ZA6" class="cta-link" target="_blank" rel="noopener">
+        → Postularte como diseñador
+      </a>
+    </section>
+
+    <section class="section">
+      <h2>Catálogo de títulos publicados</h2>
+      <p>Algunos de nuestros libros disponibles en Amazon:</p>
+      <div id="catalogo-container">
+        <p>Cargando catálogo…</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© KdpLyg</p>
+  </footer>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      fetch('catalogo.json')
+        .then(response => response.json())
+        .then(data => {
+          const container = document.getElementById('catalogo-container');
+          if (!Array.isArray(data) || data.length === 0) {
+            container.innerHTML = '<p>No hay productos disponibles.</p>';
+            return;
+          }
+
+          const html = data.map(producto => {
+            let img1 = '', img2 = '';
+            if (Array.isArray(producto.imageUrlList) && producto.imageUrlList.length > 0) {
+              img1 = producto.imageUrlList[0].trim();
+              if (producto.imageUrlList.length > 1) {
+                img2 = producto.imageUrlList[1].trim();
+              }
+            }
+            const url = producto.url || '#';
+            const title = producto.title || 'Producto';
+
+            return `
+              <div class="book-item">
+                <div class="book-images">
+                  ${img1 ? `<img src="${img1}" alt="${title}" class="book-img primary">` : ''}
+                  ${img2 ? `<img src="${img2}" alt="${title} - 2" class="book-img secondary">` : ''}
+                </div>
+                <a href="${url}" target="_blank" rel="noopener" class="book-action">Ver en Amazon</a>
+              </div>
+            `;
+          }).join('');
+
+          container.innerHTML = `<div class="catalog-list">${html}</div>`;
+        })
+        .catch(err => {
+          document.getElementById('catalogo-container').innerHTML = '<p class="error">Error al cargar el catálogo.</p>';
+        });
+    });
+  </script>
+</body>
+</html>
