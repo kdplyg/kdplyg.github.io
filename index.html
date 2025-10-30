@@ -15,7 +15,7 @@
 
   <main>
     <!-- Sección 1: Información General -->
-    <section class="section">
+    <section class="section info-section">
       <h2>Información General del Negocio</h2>
       <p>
         <strong>KdpLyg</strong> es un emprendimiento editorial digital enfocado en la publicación semanal de <strong>libros de bajo contenido</strong>, 
@@ -31,7 +31,7 @@
     </section>
 
     <!-- Sección 2: Formulario de Postulación -->
-    <section class="section">
+    <section class="section apply-section">
       <h2>¿Eres diseñador gráfico?</h2>
       <p>
         Si usted es un <strong>creador visual</strong> o <strong>diseñador gráfico</strong> que busca <strong>proyectos semanales</strong>, 
@@ -48,7 +48,7 @@
     </section>
 
     <!-- Sección 3: Catálogo Dinámico -->
-    <section class="section">
+    <section class="section catalog-section">
       <h2>Catálogo de Títulos Publicados</h2>
       <p>Explora algunos de nuestros libros disponibles en Amazon:</p>
       <div id="catalogo-container">
@@ -62,7 +62,6 @@
   </footer>
 
   <script>
-    // Cargar y mostrar el catálogo desde catalogo.json
     document.addEventListener("DOMContentLoaded", () => {
       fetch('catalogo.json')
         .then(response => response.json())
@@ -74,27 +73,29 @@
           }
 
           const html = data.map(producto => {
-            // Extraer imagen (prioriza mainImage, luego imageUrlList[0])
-            let imageUrl = '';
-            if (producto.mainImage && producto.mainImage.imageUrl) {
-              imageUrl = producto.mainImage.imageUrl.trim();
-            } else if (Array.isArray(producto.imageUrlList) && producto.imageUrlList.length > 0) {
-              imageUrl = producto.imageUrlList[0].trim();
+            let img1 = '', img2 = '';
+            if (Array.isArray(producto.imageUrlList) && producto.imageUrlList.length > 0) {
+              img1 = producto.imageUrlList[0].trim();
+              if (producto.imageUrlList.length > 1) {
+                img2 = producto.imageUrlList[1].trim();
+              }
             }
 
-            // Limpiar título (opcional: puedes dejarlo completo)
-            const title = producto.title || 'Sin título';
-            const shortDesc = producto.productDescription 
-              ? (producto.productDescription.split('.')[0] + '.') 
-              : 'Descripción no disponible';
             const url = producto.url || '#';
+            const title = producto.title || 'Producto';
 
+            // En móvil: solo imágenes + botón. En desktop: también título.
             return `
               <div class="book-card">
-                ${imageUrl ? `<img src="${imageUrl}" alt="${title}" class="book-image">` : ''}
-                <div class="book-info">
+                <div class="book-carousel">
+                  ${img1 ? `<img src="${img1}" alt="${title}" class="carousel-img active">` : ''}
+                  ${img2 ? `<img src="${img2}" alt="${title} - 2" class="carousel-img">` : ''}
+                </div>
+                <div class="book-mobile-only">
+                  <a href="${url}" target="_blank" rel="noopener" class="book-link">Ver en Amazon</a>
+                </div>
+                <div class="book-desktop-only">
                   <h3>${title}</h3>
-                  <p class="book-desc">${shortDesc}</p>
                   <a href="${url}" target="_blank" rel="noopener" class="book-link">Ver en Amazon</a>
                 </div>
               </div>
