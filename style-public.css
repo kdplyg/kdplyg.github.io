@@ -20,7 +20,7 @@ header h1 {
   font-weight: 600;
   font-size: 1.5rem;
   letter-spacing: -0.5px;
-  color: #000f;
+  color: #343434;
 }
 main {
   max-width: 720px;
@@ -33,7 +33,7 @@ h2 {
   font-size: 1.2rem;
   font-weight: 600;
   margin-bottom: 16px;
-  color: #000;
+  color: #343434;
   position: relative;
   padding-bottom: 8px;
 }
@@ -56,18 +56,19 @@ p {
 /* Enlace de acción sobrio */
 .cta-link {
   display: inline-block;
-  color: #1e40af;
+  background-color: #1e40af;       /* Azul intenso como fondo */
+  color: #ffffff;                  /* Texto blanco para contraste */
   text-decoration: none;
   font-weight: 600;
-  margin-top: 8px;
-  padding: 4px 0;
-  border-bottom: 1px solid transparent;
-  transition: border-color 0.2s;
-}
-.cta-link:hover {
-  border-bottom-color: #1e40af;
+  padding: 8px 16px;               /* Espaciado tipo botón */
+  border-radius: 6px;              /* Esquinas redondeadas */
+  transition: background-color 0.3s, transform 0.2s;
 }
 
+.cta-link:hover {
+  background-color: #1a3a99;       /* Oscurece ligeramente al pasar el mouse */
+  transform: scale(1.02);          /* Efecto sutil de crecimiento */
+}
 /* Catálogo minimalista */
 #catalogo-container .error {
   color: #d32f2f;
