@@ -14,8 +14,7 @@
   </header>
 
   <main>
-    <!-- Sección 1: Información General -->
-    <section class="section info-section">
+    <section class="section">
       <h2>Información General del Negocio</h2>
       <p>
         <strong>KdpLyg</strong> es un emprendimiento editorial digital enfocado en la publicación semanal de <strong>libros de bajo contenido</strong>, 
@@ -30,8 +29,7 @@
       </p>
     </section>
 
-    <!-- Sección 2: Formulario de Postulación -->
-    <section class="section apply-section">
+    <section class="section">
       <h2>¿Eres diseñador gráfico?</h2>
       <p>
         Si usted es un <strong>creador visual</strong> o <strong>diseñador gráfico</strong> que busca <strong>proyectos semanales</strong>, 
@@ -42,13 +40,12 @@
         (Illustrator, Inkscape o CorelDRAW) y que posean <strong>buen criterio visual</strong>. 
         No se requiere título profesional, solo el dominio de las herramientas.
       </p>
-      <a href="https://forms.gle/bXfsLo81vEFu43ZA6" class="cta-button" target="_blank" rel="noopener">
-        Postularse como diseñador
+      <a href="https://forms.gle/bXfsLo81vEFu43ZA6" class="cta-link" target="_blank" rel="noopener">
+        → Postularse como diseñador
       </a>
     </section>
 
-    <!-- Sección 3: Catálogo Dinámico -->
-    <section class="section catalog-section">
+    <section class="section">
       <h2>Catálogo de Títulos Publicados</h2>
       <p>Explora algunos de nuestros libros disponibles en Amazon:</p>
       <div id="catalogo-container">
@@ -80,33 +77,24 @@
                 img2 = producto.imageUrlList[1].trim();
               }
             }
-
             const url = producto.url || '#';
             const title = producto.title || 'Producto';
 
-            // En móvil: solo imágenes + botón. En desktop: también título.
             return `
-              <div class="book-card">
-                <div class="book-carousel">
-                  ${img1 ? `<img src="${img1}" alt="${title}" class="carousel-img active">` : ''}
-                  ${img2 ? `<img src="${img2}" alt="${title} - 2" class="carousel-img">` : ''}
+              <div class="book-item">
+                <div class="book-images">
+                  ${img1 ? `<img src="${img1}" alt="${title}" class="book-img primary">` : ''}
+                  ${img2 ? `<img src="${img2}" alt="${title} - 2" class="book-img secondary">` : ''}
                 </div>
-                <div class="book-mobile-only">
-                  <a href="${url}" target="_blank" rel="noopener" class="book-link">Ver en Amazon</a>
-                </div>
-                <div class="book-desktop-only">
-                  <h3>${title}</h3>
-                  <a href="${url}" target="_blank" rel="noopener" class="book-link">Ver en Amazon</a>
-                </div>
+                <a href="${url}" target="_blank" rel="noopener" class="book-action">Ver en Amazon</a>
               </div>
             `;
           }).join('');
 
-          container.innerHTML = `<div class="catalog-grid">${html}</div>`;
+          container.innerHTML = `<div class="catalog-list">${html}</div>`;
         })
         .catch(err => {
           document.getElementById('catalogo-container').innerHTML = '<p class="error">Error al cargar el catálogo.</p>';
-          console.error(err);
         });
     });
   </script>
