@@ -47,35 +47,12 @@
       </a>
     </section>
 
-    <!-- Sección 3: Catálogo de Títulos -->
+    <!-- Sección 3: Catálogo Dinámico -->
     <section class="section">
       <h2>Catálogo de Títulos Publicados</h2>
       <p>Explora algunos de nuestros libros disponibles en Amazon:</p>
-
-      <div class="catalog">
-        <div class="book">
-          <h3>El Arte de la Medición: Guía Esencial para Sastres y Costureras</h3>
-          <p>Publicado bajo el seudónimo <em>costurandogr</em>.</p>
-          <a href="https://www.amazon.com/dp/B0D4R6KJCQ" target="_blank" rel="noopener">Ver en Amazon</a>
-        </div>
-
-        <div class="book">
-          <h3>Costura Profesional: Cuaderno de Medidas y Bocetos</h3>
-          <p>Herramienta técnica para modistas, sastres y diseñadores.</p>
-          <a href="#" class="disabled">Enlace pendiente</a>
-        </div>
-
-        <div class="book">
-          <h3>Modista Profesional: Cuaderno de Medidas y Croquis</h3>
-          <p>Registro técnico para confección precisa.</p>
-          <a href="#" class="disabled">Enlace pendiente</a>
-        </div>
-
-        <div class="book">
-          <h3>Sastre Creativo: Cuaderno de Medidas y Bocetos Técnicos</h3>
-          <p>Precisión y expresión para medidas milimétricas.</p>
-          <a href="#" class="disabled">Enlace pendiente</a>
-        </div>
+      <div id="catalogo-container">
+        <p>Cargando catálogo…</p>
       </div>
     </section>
   </main>
@@ -83,5 +60,54 @@
   <footer>
     <p>© KdpLyg — Proyecto Editorial KDP</p>
   </footer>
+
+  <script>
+    // Cargar y mostrar el catálogo desde catalogo.json
+    document.addEventListener("DOMContentLoaded", () => {
+      fetch('catalogo.json')
+        .then(response => response.json())
+        .then(data => {
+          const container = document.getElementById('catalogo-container');
+          if (!Array.isArray(data) || data.length === 0) {
+            container.innerHTML = '<p>No hay productos disponibles.</p>';
+            return;
+          }
+
+          const html = data.map(producto => {
+            // Extraer imagen (prioriza mainImage, luego imageUrlList[0])
+            let imageUrl = '';
+            if (producto.mainImage && producto.mainImage.imageUrl) {
+              imageUrl = producto.mainImage.imageUrl.trim();
+            } else if (Array.isArray(producto.imageUrlList) && producto.imageUrlList.length > 0) {
+              imageUrl = producto.imageUrlList[0].trim();
+            }
+
+            // Limpiar título (opcional: puedes dejarlo completo)
+            const title = producto.title || 'Sin título';
+            const shortDesc = producto.productDescription 
+              ? (producto.productDescription.split('.')[0] + '.') 
+              : 'Descripción no disponible';
+            const url = producto.url || '#';
+
+            return `
+              <div class="book-card">
+                ${imageUrl ? `<img src="${imageUrl}" alt="${title}" class="book-image">` : ''}
+                <div class="book-info">
+                  <h3>${title}</h3>
+                  <p class="book-desc">${shortDesc}</p>
+                  <a href="${url}" target="_blank" rel="noopener" class="book-link">Ver en Amazon</a>
+                </div>
+              </div>
+            `;
+          }).join('');
+
+          container.innerHTML = `<div class="catalog-grid">${html}</div>`;
+        })
+        .catch(err => {
+          document.getElementById('catalogo-container').innerHTML = '<p class="error">Error al cargar el catálogo.</p>';
+          console.error(err);
+        });
+    });
+  </script>
 </body>
 </html>
