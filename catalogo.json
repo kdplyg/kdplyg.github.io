@@ -2,55 +2,6 @@
   {
     "statusCode": 200,
     "statusMessage": "FOUND",
-    "url": "https://www.amazon.com/dp/B0D4R6KJCQ?psc=1",
-    "title": "El Arte de la Medición: Guía Esencial para Sastres y Costureras\" - 94 imágenes ilustrativas de cómo tomar las medidas - VOL2: Las Técnicas de Medición ... de tapa blanda - (spanish edition) + INDICE",
-    "manufacturer": "Spanish Edition by Confecciones GR (Author)",
-    "countReview": 0,
-    "productRating": null,
-    "asin": "B0D4R6KJCQ",
-    "soldBy": "Amazon.com",
-    "fulfilledBy": "Amazon.com",
-    "sellerId": null,
-    "warehouseAvailability": "In Stock",
-    "retailPrice": 0,
-    "price": 0,
-    "priceRange": null,
-    "shippingPrice": 0,
-    "priceShippingInformation": "FREE delivery Tuesday, November 4 on orders shipped by Amazon over $35 Or Prime members get FREE delivery Saturday, November 1. Order within 20 hrs 49 mins. Join Prime",
-    "priceSaving": null,
-    "features": [],
-    "imageUrlList": [
-      "https://m.media-amazon.com/images/I/61nai15JZpL._SL1430_.jpg",
-      "https://m.media-amazon.com/images/I/61eR6KhYWTL.jpg"
-    ],
-    "videoeUrlList": [],
-    "productDescription": "VOL 2 - Nueva edición con tabla de contenido y etiqueta para nombre del propietario Tomar medidas corporales precisas puede ser una tarea difícil y frustrante. Si no se hace correctamente, puede conducir a prendas que no se ajusten bien. O a un seguimiento inexacto de los cambios corporales. Pero no te preocupes, porque en \"El Arte de la Medición\" encontrarás las soluciones que necesitas. Este libro es una guía completa diseñada para aquellos interesados en crear ropa a medida. Desde diseñadores de moda hasta costureras y patronistas, encontrarán en estas páginas instrucciones paso a paso. Y diagramas claros para medir cada parte del cuerpo, desde la cabeza hasta los pies. Las 94 imágenes detalladas y las instrucciones precisas te ayudarán a tomar medidas consistentes. Y a obtener resultados precisos. Ya seas un profesional o simplemente alguien que quiere confeccionar su propia ropa, este libro es una herramienta esencial. Características adicionales: Formato: Tapa blanda Tamaño: 7 pulgadas x 10 pulgadas Número de páginas: 94 Idioma: Español Impresión: Hojas blancas con tinta negra ¡Ajusta tus prendas perfectamente y realiza un seguimiento de tus cambios corporales con confianza! 📏👗👔 Read more",
-    "productDetails": [],
-    "minimalQuantity": "1",
-    "reviews": [],
-    "productSpecification": [],
-    "mainImage": {
-      "imageUrl": "https://m.media-amazon.com/images/I/61nai15JZpL._SY522_.jpg",
-      "imageResolution": "365 x 522"
-    },
-    "variations": [],
-    "bookVariations": [],
-    "categoriesExtended": [],
-    "deliveryMessage": null,
-    "importantInformation": [],
-    "buyBoxUsed": null,
-    "aboutProduct": [],
-    "globalReviews": [],
-    "deal": false,
-    "prime": true,
-    "used": false,
-    "pastSales": null,
-    "reviewInsights": null
-  },
-  [
-  {
-    "statusCode": 200,
-    "statusMessage": "FOUND",
     "url": "https://www.amazon.com/dp/B0CWY1FP3L?psc=1",
     "title": "Superhero and Beautiful Unicorns: A Coloring Book with 25 Fantastic Drawings for Kids and Adults (Paperback): Unleash Your Creativity and Imagination ... (Animal Super Heroes) (Spanish Edition)",
     "manufacturer": "Spanish Edition by HLascano Coloring (Author)",
@@ -510,5 +461,4 @@
     "pastSales": null,
     "reviewInsights": null
   }
-]
 ]
