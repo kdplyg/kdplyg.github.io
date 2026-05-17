@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KdpLyg</title>
+  <meta name="description" content="Editorial KDP.">
+  <link rel="stylesheet" href="style-public.css" />
+  <style>
+    /* Estilos adicionales para la nueva sección de dos columnas */
+    .oportunidades {
+      margin: 2rem 0;
+    }
+    .oportunidades h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    .oportunidades-container {
+      display: flex;
+      gap: 2rem;
+      justify-content: center;
+    }
+    .oportunidad-card {
+      flex: 1;
+      background: #f9f9f9;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .oportunidad-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+    }
+    .oportunidad-card h3 {
+      margin-top: 0;
+      margin-bottom: 0.75rem;
+      font-size: 1.5rem;
+    }
+    .oportunidad-card p {
+      margin: 0.5rem 0;
+      line-height: 1.4;
+    }
+    .oportunidad-card ul {
+      margin: 0.75rem 0;
+      padding-left: 1.2rem;
+    }
+    .oportunidad-card li {
+      margin: 0.4rem 0;
+    }
+    .oportunidad-card .cta-button {
+      display: inline-block;
+      margin-top: 1rem;
+      background: #2c7da0;
+      color: white;
+      text-decoration: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 30px;
+      font-weight: bold;
+      transition: background 0.2s ease;
+    }
+    .oportunidad-card .cta-button:hover {
+      background: #1f5e7a;
+    }
+    /* Responsive: apilar en móviles */
+    @media (max-width: 768px) {
+      .oportunidades-container {
+        flex-direction: column;
+        gap: 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>KdpLyg</h1>
+  </header>
+
+  <main>
+    <section class="section">
+      <h2>Sobre la empresa</h2>
+      <p>
+        <strong>KdpLyg</strong> es una empresa editorial digital enfocada en la publicación <strong>constante</strong> de libros de bajo contenido, 
+        como cuadernos de costura, libros para colorear, juegos y patrones técnicos.
+      </p>
+      <p>
+        Trabajamos a través de la plataforma <strong>Amazon KDP</strong>.
+      </p>
+      <p>
+        Publicamos bajo distintos seudónimos según el nicho, como <em>HL Coloring</em>, <em>Confecciones GR</em> y otros, 
+        manteniendo un flujo de producción escalable y de alta calidad.
+      </p>
+    </section>
+
+    <!-- NUEVA SECCIÓN: OPORTUNIDADES TRABAJAR CON NOSOTROS -->
+    <section class="section oportunidades">
+      <h2>✨ Oportunidades para trabajar con KdpLyg</h2>
+      <div class="oportunidades-container">
+        <!-- Tarjeta 1: Diseñador gráfico -->
+        <div class="oportunidad-card">
+          <h3>🎨 Diseñador gráfico</h3>
+          <p>Crea libros de bajo contenido (colorear, costura, juegos, patrones).</p>
+          <ul>
+            <li>🔧 Illustrator, Inkscape o CorelDRAW</li>
+            <li>✅ Proyectos constantes – sin título formal</li>
+          </ul>
+          <a href="https://forms.gle/bXfsLo81vEFu43ZA6" class="cta-button" target="_blank" rel="noopener">→ Postularse como diseñador</a>
+        </div>
+        <!-- Tarjeta 2: Creador UGC -->
+        <div class="oportunidad-card">
+          <h3>📹 Creador UGC – Video</h3>
+          <p>Graba unboxing y reseñas de nuestros libros.</p>
+          <ul>
+            <li>✅ Recibir paquetes Amazon + Cuenta Binance + mayor 16 años</li>
+            <li>🎁 Libros gratis + pago por Binance</li>
+          </ul>
+          <a href="https://forms.gle/XpYd8sv3TjKptXD68" class="cta-button" target="_blank" rel="noopener">→ Postularse como creador UGC</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Catálogo de títulos publicados</h2>
+      <p>Algunos de nuestros libros disponibles en Amazon:</p>
+      <div id="catalogo-container">
+        <p>Cargando catálogo…</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© KdpLyg - 2025</p>
+  </footer>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      fetch('catalogo.json')
+        .then(response => response.json())
+        .then(data => {
+          const container = document.getElementById('catalogo-container');
+          if (!Array.isArray(data) || data.length === 0) {
+            container.innerHTML = '<p>No hay productos disponibles.</p>';
+            return;
+          }
+
+          const html = data.map(producto => {
+            let img1 = '', img2 = '';
+            if (Array.isArray(producto.imageUrlList) && producto.imageUrlList.length > 0) {
+              img1 = producto.imageUrlList[0].trim();
+              if (producto.imageUrlList.length > 1) {
+                img2 = producto.imageUrlList[1].trim();
+              }
+            }
+            const url = producto.url || '#';
+            const title = producto.title || 'Producto';
+
+            return `
+              <div class="book-item">
+                <div class="book-images">
+                  ${img1 ? `<img src="${img1}" alt="${title}" class="book-img primary">` : ''}
+                  ${img2 ? `<img src="${img2}" alt="${title} - 2" class="book-img secondary">` : ''}
+                </div>
+                <a href="${url}" target="_blank" rel="noopener" class="book-action">Ver en Amazon</a>
+              </div>
+            `;
+          }).join('');
+
+          container.innerHTML = `<div class="catalog-list">${html}</div>`;
+        })
+        .catch(err => {
+          document.getElementById('catalogo-container').innerHTML = '<p class="error">Error al cargar el catálogo.</p>';
+        });
+    });
+  </script>
+</body>
+</html>
