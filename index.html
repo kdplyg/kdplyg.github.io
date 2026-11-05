@@ -143,7 +143,7 @@
             return;
           }
 
-          const html = data.map(producto => {
+          const renderProduct = producto => {
             let img1 = '', img2 = '';
             if (Array.isArray(producto.imageUrlList) && producto.imageUrlList.length > 0) {
               img1 = producto.imageUrlList[0].trim();
@@ -153,6 +153,7 @@
             }
             const url = producto.url || '#';
             const title = producto.title || 'Producto';
+            const shortTitle = title.length > 56 ? title.slice(0, 53).trimEnd() + '...' : title;
             const escapeHtml = value => String(value).replace(/[&<>"']/g, character => ({
               '&': '&amp;',
               '<': '&lt;',
@@ -160,21 +161,42 @@
               '"': '&quot;',
               "'": '&#39;'
             })[character]);
-            const safeTitle = escapeHtml(title);
+            const safeTitle = escapeHtml(shortTitle);
 
             return `
               <div class="book-item">
-                <div class="book-images">
-                  ${img1 ? `<img src="${escapeHtml(img1)}" alt="${safeTitle}" class="book-img primary">` : ''}
-                  ${img2 ? `<img src="${escapeHtml(img2)}" alt="${safeTitle} - 2" class="book-img secondary">` : ''}
-                </div>
-                <h3 class="book-title">${safeTitle}</h3>
+                <a href="${escapeHtml(url)}" target="_blank" rel="noopener" class="book-product-link" aria-label="Ver ${safeTitle} en Amazon">
+                  <div class="book-images">
+                    ${img1 ? `<img src="${escapeHtml(img1)}" alt="${safeTitle}" class="book-img primary">` : ''}
+                    ${img2 ? `<img src="${escapeHtml(img2)}" alt="${safeTitle} - 2" class="book-img secondary">` : ''}
+                  </div>
+                  <h3 class="book-title">${safeTitle}</h3>
+                </a>
                 <a href="${escapeHtml(url)}" target="_blank" rel="noopener" class="book-action">Ver en Amazon</a>
               </div>
             `;
-          }).join('');
+          };
 
-          container.innerHTML = `<div class="catalog-list">${html}</div>`;
+          const isSewingRelated = producto => /costura|costur|confecci[oó]n|sastr|modista|patronaje|sewing|tailor|dressmaking|clothes alteration|measur(?:ing|ement)|medidas|moda|ropa/i.test(producto.title || '');
+          const groups = [
+            {
+              title: 'Libros para costura, sastrería y diseño textil',
+              description: 'Cuadernos y herramientas para modistas, sastres y diseñadores.',
+              products: data.filter(isSewingRelated)
+            },
+            {
+              title: 'Otros libros y actividades',
+              products: data.filter(producto => !isSewingRelated(producto))
+            }
+          ].filter(group => group.products.length > 0);
+
+          container.innerHTML = groups.map(group => `
+            <section class="catalog-group">
+              <h3>${group.title}</h3>
+              ${group.description ? `<p class="catalog-group-description">${group.description}</p>` : ''}
+              <div class="catalog-list">${group.products.map(renderProduct).join('')}</div>
+            </section>
+          `).join('');
         })
         .catch(err => {
           document.getElementById('catalogo-container').innerHTML = '<p class="error">Error al cargar el catálogo.</p>';
