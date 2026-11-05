@@ -153,14 +153,23 @@
             }
             const url = producto.url || '#';
             const title = producto.title || 'Producto';
+            const escapeHtml = value => String(value).replace(/[&<>"']/g, character => ({
+              '&': '&amp;',
+              '<': '&lt;',
+              '>': '&gt;',
+              '"': '&quot;',
+              "'": '&#39;'
+            })[character]);
+            const safeTitle = escapeHtml(title);
 
             return `
               <div class="book-item">
                 <div class="book-images">
-                  ${img1 ? `<img src="${img1}" alt="${title}" class="book-img primary">` : ''}
-                  ${img2 ? `<img src="${img2}" alt="${title} - 2" class="book-img secondary">` : ''}
+                  ${img1 ? `<img src="${escapeHtml(img1)}" alt="${safeTitle}" class="book-img primary">` : ''}
+                  ${img2 ? `<img src="${escapeHtml(img2)}" alt="${safeTitle} - 2" class="book-img secondary">` : ''}
                 </div>
-                <a href="${url}" target="_blank" rel="noopener" class="book-action">Ver en Amazon</a>
+                <h3 class="book-title">${safeTitle}</h3>
+                <a href="${escapeHtml(url)}" target="_blank" rel="noopener" class="book-action">Ver en Amazon</a>
               </div>
             `;
           }).join('');
