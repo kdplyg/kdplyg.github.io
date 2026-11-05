@@ -153,7 +153,6 @@
             }
             const url = producto.url || '#';
             const title = producto.title || 'Producto';
-            const shortTitle = title.length > 56 ? title.slice(0, 53).trimEnd() + '...' : title;
             const escapeHtml = value => String(value).replace(/[&<>"']/g, character => ({
               '&': '&amp;',
               '<': '&lt;',
@@ -161,7 +160,7 @@
               '"': '&quot;',
               "'": '&#39;'
             })[character]);
-            const safeTitle = escapeHtml(shortTitle);
+            const safeTitle = escapeHtml(title);
 
             return `
               <div class="book-item">
@@ -170,7 +169,6 @@
                     ${img1 ? `<img src="${escapeHtml(img1)}" alt="${safeTitle}" class="book-img primary">` : ''}
                     ${img2 ? `<img src="${escapeHtml(img2)}" alt="${safeTitle} - 2" class="book-img secondary">` : ''}
                   </div>
-                  <h3 class="book-title">${safeTitle}</h3>
                 </a>
                 <a href="${escapeHtml(url)}" target="_blank" rel="noopener" class="book-action">Ver en Amazon</a>
               </div>
